@@ -1,0 +1,180 @@
+% import the data using SQL from amazon aws
+SELECT
+  bdl.loops_account.id,
+  bdl.loops_account.register_time,
+  bdl.loops_account.last_online,
+  realtime.loops_user_behavior.ts,
+  realtime.loops_user_behavior.is_bdc_enter,
+  realtime.loops_user_behavior.is_chat_send,
+  realtime.loops_user_behavior.is_explore_click,
+  realtime.loops_user_behavior.is_gift_send,
+  realtime.loops_user_behavior.is_leaderboard_click,
+  realtime.loops_user_behavior.is_mylevel_enter,
+  realtime.loops_user_behavior.is_mytitle_enter,
+  realtime.loops_user_behavior.is_upcoming_click,
+  realtime.loops_user_behavior.is_upcomming_register
+FROM bdl.loops_account, realtime.loops_user_behavior
+WHERE DATE(bdl.loops_account.register_time ) = '2018-03-31'
+      AND bdl.loops_account.id = realtime.loops_user_behavior.user_id
+
+
+% Data preprocessing (sort and delete the unused) using excel or R
+
+
+% load the packages
+
+library(readr)
+library(ggplot2)
+library(dyplr)
+library(reshape2)
+
+% create dataframe from original data
+
+marchfinal <- read_csv("~/Library/Mobile Documents/com~apple~CloudDocs/capstone project/marchfinal.csv",
+    col_types = cols(ts = col_date(format = "%d/%m/%Y")))
+View(marchfinal)
+
+
+% create the blank datafram used for accounting activities ratio
+excel create test for accounting activities
+
+% account the overall ratio
+j=1
+leng=length(data1$march.id)
+for (i in 1:leng) {
++     if (data1$march.id[i] == data1$march.id[i+1])
++     {df=as.numeric(data1$march.ts[i]-data1$march.ts[1])
++     test[j,df+2]<-1}
++     else
++     {df=as.numeric(data1$march.ts[i]-data1$march.ts[1])
++     test[j,df+2]<-1
++     j=j+1}}
+
+y<-data.frame(1:30)
+for (q in 2:31){
+y[q-1]<-sum(test[,q])}
+
+% create the dataframe of uniqueid for innerjoin
+index<-duplicated(march$id)
+uni<-march[!index,]
+
+% account the behavior people ratio
+test1<-data.frame(1:leng)
+test2<-test1
+test3<-test1
+test4<-test1
+test5<-test1
+test6<-test1
+test7<-test1
+test8<-test1
+test9<-test1
+
+unilen<-length(uni$id)
+w=1
+for (i in 1:unilen){
+if (uni$is_bdc_enter[i]>0)
+{test1[w]<-uni$id[i]
+w=w+1}}
+w=1
+for (i in 1:unilen){
+if (uni$is_chat_send[i]>0)
+{test2[w]<-uni$id[i]
+w=w+1}}
+w=1
+for (i in 1:unilen){
+if (uni$is_gift_send[i]>0)
+{test3[w]<-uni$id[i]
+w=w+1}}
+w=1
+for (i in 1:unilen){
+if (uni$is_explore_click[i]>0)
+{test4[w]<-uni$id[i]
+w=w+1}}
+w=1
+for (i in 1:unilen){
+if (uni$is_mylevel_enter[i]>0)
+{test5[w]<-uni$id[i]
+w=w+1}}
+w=1
+for (i in 1:unilen){
+if (uni$is_mytitle_enter[i]>0)
+{test6[w]<-uni$id[i]
+w=w+1}}
+w=1
+for (i in 1:unilen){
+if (uni$is_upcoming_click[i]>0)
+{test7[w]<-uni$id[i]
+w=w+1}}
+w=1
+for (i in 1:unilen){
+if (uni$is_leaderboard_click[i]>0)
+{test8[w]<-uni$id[i]
+w=w+1}}
+w=1
+for (i in 1:unilen){
+if (uni$is_upcomming_register[i]>0)
+{test9[w]<-uni$id[i]
+w=w+1}}
+
+colnames(test1)<-c('id')
+colnames(test2)<-c('id')
+colnames(test3)<-c('id')
+colnames(test4)<-c('id')
+colnames(test5)<-c('id')
+colnames(test6)<-c('id')
+colnames(test7)<-c('id')
+colnames(test8)<-c('id')
+colnames(test9)<-c('id')
+
+beha1<-inner_join(test,test1,by='id')
+beha2<-inner_join(test,test2,by='id')
+beha3<-inner_join(test,test3,by='id')
+beha4<-inner_join(test,test4,by='id')
+beha5<-inner_join(test,test5,by='id')
+beha6<-inner_join(test,test6,by='id')
+beha7<-inner_join(test,test7,by='id')
+beha8<-inner_join(test,test8,by='id')
+beha9<-inner_join(test,test9,by='id')
+
+y1<y
+y2<-y
+y3<-y
+y4<-y
+y5<-y
+y6<-y
+y7<-y
+y8<-y
+y9<-y
+
+for (q in 2:31){
+y1[q-1]<-sum(beha1[,q])}
+for (q in 2:31){
+y2[q-1]<-sum(beha2[,q])}
+for (q in 2:31){
+y3[q-1]<-sum(beha3[,q])}
+for (q in 2:31){
+y4[q-1]<-sum(beha4[,q])}
+for (q in 2:31){
+y5[q-1]<-sum(beha5[,q])}
+for (q in 2:31){
+y6[q-1]<-sum(beha6[,q])}
+for (q in 2:31){
+y7[q-1]<-sum(beha7[,q])}
+for (q in 2:31){
+y8[q-1]<-sum(beha8[,q])}
+for (q in 2:31){
+y9[q-1]<-sum(beha9[,q])}
+
+ratio_is_bdc_enter<-y1/y1[1]
+ratio_is_chat_send<-y2/y2[1]
+ratio_is_explore_click<-y3/y3[1]
+ratio_is_mylevel<-y6/y6[1]
+ratio_is_upcoming_click<-y8/y8[1]
+ratio_is_upcomming_register<-y9/y9[1]
+
+times<- seq(from = as.Date('2018-04-01'), to = as.Date('2018-04-30'), by = 'day')
+col<-c('overall','is_bdc_enter','is_chat_send','is_explore_click','is_my_level','is_upcoming_click','ic_upcomming_register','date'')
+datafinal<-data.frame(y,ratio_is_bdc_enter,ratio_is_chat_send,ratio_is_explore_click,ratio_is_mylevel,ratio_is_upcoming_click,ratio_is_upcomming_register,times)
+colnames(datafinal)<-col
+dataplot<-melt(datafinal,id='times')
+ggplot(data=dataplot, aes(x=times, y=value, colour=variable)) + geom_line()
