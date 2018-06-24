@@ -1,0 +1,139 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage{graphicx}
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage{indentfirst}
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{enumitem} % Customized lists
+\setlist[itemize]{noitemsep} % Make itemize lists more compact
+\usepackage{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
+%\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+%\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+\usepackage{titling} % Customizing the title section
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+%\fancyfoot{} % Blank out the default footer
+\fancyhead[C]{ESSEC BUSINESS SCHOOL} % Custom header text
+%\fancyfoot[RO,LE]{\thepage} % Custom footer text
+% copy part
+
+% title part
+\setlength{\droptitle}{-8\baselineskip} % Move the title up
+\setlength{\parindent}{2em}
+\title{
+\normalfont \normalsize
+\huge Improve the retention rate based on users' behavior analysis\\}
+\author{Shenghua Du (MSc in Business Analytics and Data Scientice)\\[5pt] % Your name
+\normalsize Essec Business School - Mozat Singapore \\ [5pt]% Your institution
+\normalsize {shenghua.du@essec.edu} \\ [5pt]}% Your email address
+\date{\normalsize\today} % Today's date or a custom date
+%title part
+
+\begin{document}
+\maketitle % Print the title
+\section{Abstract}
+\indent As we know, Internet companies often launch some campaigns to acquire new users or reserve old users.
+So how to improve these users' s retention rate has become an important issue.In this project we will
+design a new user guide by analyzing the users behavior log data to help improve it.Below are one music app new users' natural retention rate curve and improved curve after operation campaign.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.8]{1.png}
+\caption{An example of improvement of retetion rate }
+\label{fig:label1}
+\end{figure}
+
+\section{Data source and structure}
+Our data is from Mozat Singapore's mobile broadcast app Loops's database.
+We have used the users' basic information and behavior log,which includes 3000W records.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.6]{2.png}
+\caption{The data structure}
+\label{fig:label2}
+\end{figure}
+
+
+\section{Definition and Benchmark}
+\indent Nine users' behavior includes:watch live,
+send chat,send gift,go to upcoming,register upcoming,
+go to explore center,enter my level.
+These users need to do the behavior in his first
+online time cause we need to analyze the influence to the retention rate of the first time's click.
+
+\indent Retention rate:We need to account all new users'
+retention ratio and users' who had
+done the behavior active ratio in
+one month separately. If a user is online one day we
+account 1 active point in one day
+Then we use the accumulated point
+divided by the number of users
+We can get the one month's retention ratio.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.8]{7.png}
+\caption{How to difine he retention rate}
+\label{fig:label3}
+\end{figure}
+
+And another question:how to divide people
+who had been familiar with broadcast platform
+and who originally have high retention rate and
+who are motivated by the behavior?In order
+to reduce the influence of these people
+we remove these people who had given gift in one month.
+We think them as people
+who originally have high retention rate.
+
+\clearpage
+\section{Result and conclusion}
+\indent Below three figures are the final result what we get.
+Behavior of same dimension has been put into same figure.\\
+
+\begin{figure1}
+\begin{center}
+\includegraphics[scale=0.4]{3.png}
+\begin{center}
+\caption{Retention rate 1}
+\label{fig:label4}
+\end{figure1}
+
+\begin{figure2}
+\begin{center}
+\includegraphics[scale=0.4]{4.png}
+\begin{center}
+\caption{Retention rate 1}
+\label{fig:label4}
+\end{figure2}
+
+\begin{figure3}
+\begin{center}
+\includegraphics[scale=0.4]{5.png}
+\begin{center}
+\caption{Retention rate 1}
+\label{fig:label4}
+\end{figure3}
+
+\clearpage 
+\section{Strategy}
+\begin{enumerate}
+\incent \item Encourage broadcasters to welcome the new users in policy.
+Then watcher is more likely to interactive with broadcasters like send chat.
+(broadcaster guide)
+\incent \item First ten message rewards like experience to help user achieve level 2 more quickly.\\
+\incent \item New user guide to force new users to send chat.
+\end{enumerate}
+
+\section{Attachment}
+R code website(ssh):
+git@github.com:PPPPParadise/MSc-Capstone-Project.git
+\end{document}
